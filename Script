@@ -1,0 +1,124 @@
+--abixo estar o script op
+
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/7yhx/kwargs_Ui_Library/main/source.lua"))()
+
+local UI = Lib:Create{
+   Theme = "Dark", -- or any other theme
+   Size = UDim2.new(0, 555, 0, 400) -- default
+}
+
+local Main = UI:Tab{
+   Name = "início"
+}
+
+local Divider = Main:Divider{
+   Name = "início shit"
+}
+
+local QuitDivider = Main:Divider{
+   Name = "sair" 
+   
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Menu Lateral</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <a href="#">Entrar</a>
+            <a href="#">Sair</a>
+            <button id="ativarScript">Ativar Script</button>
+        </nav>
+        <!-- Conteúdo principal do seu script aqui -->
+    </div>
+    <script>
+        const botaoAtivar = document.getElementById("ativarScript");
+        let scriptAtivado = false;
+
+        botaoAtivar.addEventListener("click", () => {
+            scriptAtivado = !scriptAtivado;
+            if (scriptAtivado) {
+                console.log("Script ativado!");
+                // Coloque aqui a lógica para ativar o seu script
+            } else {
+                console.log("Script desativado!");
+                // Coloque aqui a lógica para desativar o seu script
+            }
+        });
+    </script>
+</body>
+</html>
+/* styles.css */
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar a, .sidebar button {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.sidebar a:hover, .sidebar button:hover {
+    background-color: #555;
+}
+
+local minhaEquipe = "Azul" -- Substitua pela cor da sua equipe (Azul ou Vermelha)
+local corInimiga = (minhaEquipe == "Azul") and Color3.new(1, 0, 0) or Color3.new(0, 0, 1)
+
+-- Função para marcar inimigos com FOV
+local function MarcarInimigos()
+    for _, jogador in pairs(game.Players:GetPlayers()) do
+        if jogador.TeamColor ~= minhaEquipe then
+            local seta = Instance.new("TextLabel")
+            seta.Text = "→" -- Símbolo de seta
+            seta.Position = UDim2.new(0.5, 0, 0.5, 0) -- Posição central na tela
+            seta.Size = UDim2.new(0, 20, 0, 20) -- Tamanho da seta
+            seta.TextColor3 = corInimiga
+            seta.BackgroundTransparency = 1
+            seta.Parent = jogador.PlayerGui -- Adiciona a seta ao GUI do jogador
+        end
+    end
+end
+
+-- Ativar ou desativar o script
+local ativado = true
+
+-- Função para alternar o estado do script
+local function AlternarScript()
+    ativado = not ativado
+    if ativado then
+        MarcarInimigos()
+        print("Script ativado! Inimigos marcados.")
+    else
+        for _, jogador in pairs(game.Players:GetPlayers()) do
+            if jogador.TeamColor ~= minhaEquipe then
+                jogador.PlayerGui:FindFirstChild("TextLabel"):Destroy()
+            end
+        end
+        print("Script desativado! Marcadores removidos.")
+    end
+end
+
+-- Ativar o script inicialmente
+AlternarScript()
+
+-- Conectar a tecla para alternar o script
+game:GetService("UserInputService").InputBegan:Connect(function(tecla)
+    if tecla.KeyCode == Enum.KeyCode.F then
+        AlternarScript()
+    end
+end)
